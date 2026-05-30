@@ -1,0 +1,45 @@
+async function undoReposts() {
+  console.log("Searching for reposts...");
+  // Find all buttons that indicate you have reposted this tweet
+  const repostButtons = document.querySelectorAll('[data-testid="unretweet"]');
+  
+  if (repostButtons.length === 0) {
+    console.log("No reposts found on screen. Scrolling down...");
+    window.scrollTo(0, document.body.scrollHeight);
+    // Wait 4 seconds for new tweets to load
+    setTimeout(undoReposts, 4000);
+    return;
+  }
+
+  for (const btn of repostButtons) {
+    // Step 1: Click the green repost button to open the menu
+    btn.click();
+    
+    // Wait 500 milliseconds for X's UI to actually draw the dropdown menu
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Step 2: Find the "Undo Repost" button in the newly opened menu and click it
+    const confirmBtn = document.querySelector('[data-testid="unretweetConfirm"]');
+    if (confirmBtn) {
+      confirmBtn.click();
+      console.log("Successfully removed a repost.");
+    } else {
+      console.log("Could not find the confirmation button. Skipping...");
+      // Click somewhere else to close the broken menu so it doesn't jam the next loop
+      document.body.click(); 
+    }
+    
+    // Random delay between 1.5 and 3.5 seconds to avoid rate-limit bans
+    const randomDelay = Math.floor(Math.random() * 2000) + 1500; 
+    await new Promise(resolve => setTimeout(resolve, randomDelay));
+  }
+
+  console.log("Finished current batch. Scrolling for more...");
+  window.scrollTo(0, document.body.scrollHeight);
+  
+  // Wait 4 seconds before starting the next batch
+  setTimeout(undoReposts, 4000);
+}
+
+// Start the process
+undoReposts();
