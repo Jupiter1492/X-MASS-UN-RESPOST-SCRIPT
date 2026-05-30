@@ -1,5 +1,7 @@
 # X-MASS-UN-RESPOST-SCRIPT
-X (Twitter) Repost deleter. It is a short Java Script that deletes your reposts. It is slow, but gets the Job done.
+This tool is for educational purposes only. Automated engagement and mass-deletions violate X's Terms of Service. Use of this script may lead to temporary or permanent account suspension. I am not responsible for any actions taken against your account.
+
+
 How to use it:
 1. Go to your Profile page on X.
 2. Make sure you are on the Posts or Replies tab (wherever your reposts are visible).
